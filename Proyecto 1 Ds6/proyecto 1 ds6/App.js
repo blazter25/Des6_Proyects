@@ -32,9 +32,15 @@ function Row({ k, v, bold }) {
   );
 }
 
-function Radio({ selected, label, onPress, color }) {
+function Radio({ selected, label, onPress, color, dimmed }) {
+  // `dimmed` solo atenúa visualmente la opción (transparencia), pero NO la deshabilita:
+  // el TouchableOpacity sigue respondiendo al onPress, por lo que continúa siendo seleccionable.
   return (
-    <TouchableOpacity style={styles.radioRow} onPress={onPress} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={[styles.radioRow, dimmed && styles.radioDimmed]}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
       <View style={[styles.radioOuter, { borderColor: color }]}>
         {selected ? <View style={[styles.radioInner, { backgroundColor: color }]} /> : null}
       </View>
@@ -56,14 +62,9 @@ export default function App() {
     setResultado(null);
 
     const costoNum = parseFloat(costo);
-    const salarioNum = parseFloat(salario);
 
     if (isNaN(costoNum) || costoNum <= 0) {
       setError('Ingrese un costo válido (mayor a 0).');
-      return;
-    }
-    if (isNaN(salarioNum) || salarioNum <= 0) {
-      setError('Ingrese un salario válido (mayor a 0).');
       return;
     }
 
@@ -82,6 +83,15 @@ export default function App() {
         granTotal,
       });
       return;
+    }
+
+    // El crédito usa el salario para evaluar la aprobación.
+    // Si el salario es inválido o 0, se avisa PERO igual se muestra el resultado:
+    // se toma como 0, por lo que el 30% del salario es 0 y queda NO APROBADO.
+    let salarioNum = parseFloat(salario);
+    if (isNaN(salarioNum) || salarioNum <= 0) {
+      setError('Ingrese un salario mayor a 0.');
+      salarioNum = 0;
     }
 
     const capitalConInteres = precioBase * Math.pow(1 + TASA_INTERES, ANIOS_CREDITO);
@@ -112,6 +122,10 @@ export default function App() {
     setError('');
   };
 
+  // El salario solo se usa para evaluar el crédito (letra <= 30% del salario).
+  // Se deshabilita en transmisión Manual, EXCEPTO cuando el pago es a Crédito.
+  const salarioDeshabilitado = transmision === 'manual' && formaPago !== 'credito';
+
   return (
     <KeyboardAvoidingView
       style={styles.safe}
@@ -133,14 +147,20 @@ export default function App() {
               onChangeText={setCosto}
             />
 
-            <Text style={styles.label}>Salario:</Text>
+            <Text style={[styles.label, salarioDeshabilitado && styles.labelDisabled]}>
+              Salario:
+            </Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, salarioDeshabilitado && styles.inputDisabled]}
               keyboardType="numeric"
               placeholder="0.00"
               value={salario}
               onChangeText={setSalario}
+              editable={!salarioDeshabilitado}
             />
+            {salarioDeshabilitado ? (
+              <Text style={styles.hint}>El salario se deshabilita en Manual con pago de Contado.</Text>
+            ) : null}
 
             <Text style={styles.section}>Transmisión:</Text>
             <Radio
@@ -154,6 +174,7 @@ export default function App() {
               selected={transmision === 'automatica'}
               label="Automática"
               onPress={() => setTransmision('automatica')}
+              dimmed={transmision === 'manual'}
             />
 
             <Text style={styles.section}>Forma de pago:</Text>
@@ -193,22 +214,6 @@ export default function App() {
             {resultado && resultado.tipo === 'credito' ? (
               <View style={styles.resultBox}>
                 <Text style={styles.resultTitle}>Resultado (Crédito)</Text>
-                <Row k="Precio base:" v={`B/. ${formatear(resultado.costo)}`} />
-                <Row
-                  k={`Cf = Ci(1+r)^${ANIOS_CREDITO}:`}
-                  v={`B/. ${formatear(resultado.capitalConInteres)}`}
-                />
-                <Row k="ITBM (7%):" v={`B/. ${formatear(resultado.itbm)}`} />
-                <Row
-                  k="Capital final:"
-                  v={`B/. ${formatear(resultado.capitalFinal)}`}
-                  bold
-                />
-                <Row k="Letra Mensual:" v={`B/. ${formatear(resultado.letraMensual)}`} />
-                <Row
-                  k="30% del salario:"
-                  v={`B/. ${formatear(resultado.treintaSalario)}`}
-                />
                 <Text
                   style={[
                     styles.estado,
@@ -217,6 +222,16 @@ export default function App() {
                 >
                   {resultado.aprobado ? 'APROBADO' : 'NO APROBADO'}
                 </Text>
+                <Row
+                  k="Total a pagar:"
+                  v={`B/. ${formatear(resultado.capitalFinal)}`}
+                  bold
+                />
+                <Row k="Letra:" v={`B/. ${formatear(resultado.letraMensual)}`} />
+                <Row
+                  k="30% del salario:"
+                  v={`B/. ${formatear(resultado.treintaSalario)}`}
+                />
               </View>
             ) : null}
           </View>
@@ -281,6 +296,22 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: '#111',
   },
+  inputDisabled: {
+    // Apariencia de campo deshabilitado (atenuado y no editable).
+    opacity: 0.45,
+    backgroundColor: '#F3F4F6',
+    borderBottomColor: '#D1D5DB',
+    color: '#9CA3AF',
+  },
+  labelDisabled: {
+    color: '#9CA3AF',
+  },
+  hint: {
+    fontSize: 11,
+    color: '#9CA3AF',
+    fontStyle: 'italic',
+    marginBottom: 2,
+  },
   section: {
     marginTop: 14,
     marginBottom: 2,
@@ -292,6 +323,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 6,
+  },
+  radioDimmed: {
+    // Solo apariencia: la opción se ve transparente/atenuada pero sigue siendo seleccionable.
+    opacity: 0.35,
   },
   radioOuter: {
     width: 20,
