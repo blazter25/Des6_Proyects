@@ -14,6 +14,7 @@ import {
   Text,                // Componente para mostrar texto en pantalla
   View,                // Contenedor / caja (equivale a un <div> en web)
   TextInput,           // Caja de texto donde el usuario escribe (costo, salario)
+  Image,               // Componente para mostrar imágenes (lo usa el bloque de imagen comentado más abajo)
   TouchableOpacity,    // Botón presionable que se atenúa al tocarlo
   ScrollView,          // Contenedor con scroll (permite desplazar la pantalla)
   KeyboardAvoidingView,// Evita que el teclado tape los campos al escribir
@@ -161,6 +162,27 @@ export default function App() {
           <View style={styles.phoneNotch} />  {/* Pequeña barra (notch) decorativa arriba del celular */}
           <View style={styles.screen}>        {/* "Pantalla" blanca interna del celular */}
             <Text style={styles.title}>Venta de Auto</Text>          {/* <-- CAMBIAR: título principal que se muestra en pantalla */}
+
+            {/* ========================================================================= */}
+            {/*  IMAGEN — Para mostrar una imagen, DESCOMENTA el bloque que necesites.    */}
+            {/*  PASO 1: copia tu imagen dentro de la carpeta  assets/images             */}
+            {/*  PASO 2: descomenta UNA de las dos opciones de abajo y pon tu archivo/URL */}
+            {/* ------------------------------------------------------------------------- */}
+
+            {/* OPCIÓN A — Imagen LOCAL (archivo guardado en assets/images):              */}
+            {/* <Image
+                  source={require('./assets/images/AQUI-EL-NOMBRE.png')}  // <-- CAMBIAR: nombre de tu archivo en assets/images
+                  style={styles.imagen}
+                  resizeMode="contain"
+                /> */}
+
+            {/* OPCIÓN B — Imagen por URL (foto que está en internet):                    */}
+            {/* <Image
+                  source={{ uri: 'https://AQUI-PEGA-EL-URL.jpg' }}        // <-- CAMBIAR: pega aquí el URL de la imagen
+                  style={styles.imagen}
+                  resizeMode="contain"
+                /> */}
+            {/* ========================================================================= */}
 
             <Text style={styles.label}>Costo:</Text>                 {/* <-- CAMBIAR: etiqueta del primer campo */}
             <TextInput
@@ -312,6 +334,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',                           // Texto centrado
     marginBottom: 14,                              // Espacio debajo del título
     color: '#1F2937',                              // <-- CAMBIAR: color del título
+  },
+  imagen: {                                        // Estilo de la imagen (lo usa el bloque de imagen comentado de arriba)
+    width: '100%',                                 // <-- CAMBIAR: ancho de la imagen ('100%' = todo el ancho disponible)
+    height: 160,                                   // <-- CAMBIAR: alto de la imagen en píxeles
+    borderRadius: 12,                              // <-- CAMBIAR: redondeo de las esquinas de la imagen
+    marginBottom: 14,                              // Espacio debajo de la imagen
   },
   label: {                                         // Estilo de las etiquetas "Costo:" y "Salario:"
     fontSize: 14,                                  // Tamaño de letra

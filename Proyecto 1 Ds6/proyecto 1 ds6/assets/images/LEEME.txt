@@ -1,0 +1,27 @@
+CARPETA DE IMAGENES — Proyecto 1 DS6
+====================================
+
+Aqui van las imagenes de la app.
+
+COMO AGREGAR UNA IMAGEN (2 pasos):
+
+1) Copia tu imagen (png o jpg) dentro de ESTA carpeta:
+   assets/images/
+
+2) Abre App.js y busca el bloque que dice "IMAGEN" (esta justo debajo del titulo
+   "Venta de Auto"). Ahi hay 2 opciones, descomenta UNA:
+
+   OPCION A - imagen LOCAL (archivo en esta carpeta):
+     - Quita las marcas de comentario del bloque OPCION A.
+     - Cambia 'AQUI-EL-NOMBRE.png' por el nombre exacto de tu archivo.
+       Ejemplo: require('./assets/images/carro.png')
+
+   OPCION B - imagen por URL (foto de internet):
+     - Quita las marcas de comentario del bloque OPCION B.
+     - Pega el URL de la imagen dentro de las comillas de uri.
+       Ejemplo: { uri: 'https://misitio.com/carro.jpg' }
+
+NOTA: descomenta solo UNA opcion a la vez (A o B), no las dos.
+
+El tamano de la imagen (ancho, alto, esquinas) se cambia en App.js,
+en el estilo "imagen" dentro del bloque de estilos (StyleSheet).
