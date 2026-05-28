@@ -1,13 +1,3 @@
-// ============================================================================
-//  App.js — Componente principal de la app "Venta de Auto"
-//  Estudiante: Angel Martínez   Cédula: 8-893-602
-//  Materia: Desarrollo de Software VI (DS6)   Proyecto #1
-//  ----------------------------------------------------------------------------
-//  NOTA PARA LA SUSTENTACIÓN: las líneas marcadas con  <-- CAMBIAR  son las que
-//  la profesora puede pedirte modificar en vivo (textos, colores, fórmulas,
-//  porcentajes, etc.). Ahí se explica qué tendrías que tocar.
-// ============================================================================
-
 import React, { useState } from 'react';          // React + el hook useState (para guardar datos que cambian en pantalla)
 import {
   StyleSheet,          // Permite crear los estilos (como el CSS) de la app
@@ -299,7 +289,7 @@ export default function App() {
 //  tamaños de letra, bordes, etc. Las marcas señalan los más probables.
 // ============================================================================
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#E5E7EB' },   // <-- CAMBIAR: color de fondo general de la app (gris claro)
+  safe: { flex: 1, backgroundColor: '#e9ebe5' },   // <-- CAMBIAR: color de fondo general de la app (gris claro)
   scroll: { padding: 16, alignItems: 'center' },   // Relleno interno y centrado del contenido con scroll
   phoneFrame: {                                    // Marco negro tipo celular
     width: '100%',                                 // Ocupa todo el ancho disponible
@@ -324,7 +314,7 @@ const styles = StyleSheet.create({
     marginBottom: 14,                              // Espacio debajo del notch
   },
   screen: {                                        // Pantalla blanca interna
-    backgroundColor: '#FFFFFF',                    // <-- CAMBIAR: color de la "pantalla" interna (blanco)
+    backgroundColor: '#f8fc1b',                    // <-- CAMBIAR: color de la "pantalla" interna (blanco)
     borderRadius: 22,                              // Redondeo de esquinas de la pantalla
     padding: 18,                                   // Relleno interno
   },
@@ -412,7 +402,7 @@ const styles = StyleSheet.create({
   },
   btnPrimary: {                                    // Botón principal "Calcular"
     flex: 1,                                        // Ocupa la mitad del espacio disponible
-    backgroundColor: '#2D9CDB',                    // <-- CAMBIAR: color de fondo del botón Calcular (azul)
+    backgroundColor: '#757575',                    // <-- CAMBIAR: color de fondo del botón Calcular (azul)
     paddingVertical: 12,                           // Alto interno
     borderRadius: 10,                              // Esquinas redondeadas
     alignItems: 'center',                          // Centra el texto
