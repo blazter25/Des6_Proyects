@@ -88,17 +88,28 @@ sistema-votacion-utp/
 
 ---
 
-## Cédulas registradas de prueba
+## Cédulas para iniciar sesión
 
-Puedes usar cualquiera de estas cédulas para votar:
+El padrón acepta **cualquier cédula con formato panameño válido** (todas las
+combinaciones posibles), por lo que no es necesario memorizar una lista. Son
+válidas, por ejemplo:
+
+- Provincias regulares (1 a 13): `8-123-456`, `3-715-765`, `8-1234-5678`
+- Naturalizados / extranjeros con prefijo de letras: `E-8-12345`, `N-19-1234`, `PE-12-3456`
+
+Estructura aceptada: `PROVINCIA-TOMO-ASIENTO`, donde la provincia es un número
+del 1 al 13 o un prefijo de hasta 3 letras (E, N, PE, AV…), el tomo tiene de 1 a
+4 dígitos y el asiento de 1 a 6 dígitos.
+
+Cédulas de ejemplo listas para usar:
 
 ```
-8-715-765   8-901-234   8-456-789   8-123-456   8-654-321
-8-777-888   8-111-222   8-333-444   8-555-666   8-999-000
+8-893-602   8-715-765   8-901-234   8-456-789   8-123-456
+8-654-321   8-777-888   8-111-222   8-333-444   8-555-666
 ```
 
 > Nota: cada cédula solo puede votar una vez. Si intentas votar de nuevo con la
-> misma cédula, el sistema lo impedirá.
+> misma cédula, el sistema lo impedirá ("Esta cédula ya emitió su voto").
 
 ---
 

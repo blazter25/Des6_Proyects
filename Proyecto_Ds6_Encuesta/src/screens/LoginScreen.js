@@ -21,7 +21,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { cedulasRegistradas } from '../data/cedulas';
+import { esCedulaPanamenaValida } from '../data/cedulas';
 import { useVotacion } from '../context/VotacionContext';
 import { COLORS } from '../theme';
 
@@ -41,13 +41,15 @@ function validarFormatoCedula(cedula) {
 
 /**
  * cedulaEstaRegistrada
- * Indica si una cédula pertenece al padrón de cédulas registradas.
+ * Indica si una cédula pertenece al padrón electoral. El padrón acepta
+ * cualquier cédula con formato panameño válido (todas las combinaciones
+ * posibles), por lo que la verificación se hace contra dicho formato.
  *
  * @param {string} cedula - Cédula a buscar.
- * @returns {boolean} true si la cédula está registrada.
+ * @returns {boolean} true si la cédula está habilitada en el padrón.
  */
 function cedulaEstaRegistrada(cedula) {
-  return cedulasRegistradas.includes(cedula);
+  return esCedulaPanamenaValida(cedula);
 }
 
 /**
